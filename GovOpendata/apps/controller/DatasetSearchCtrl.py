@@ -18,17 +18,19 @@ class DatasetSearchCtrl(Resource):
         parser.add_argument('update_order', type=str, default='desc', choices=['desc', 'asc'])
         parser.add_argument('keyword', default=None)
         parser.add_argument('gov_id', default=None)
-        parser.add_argument('dep_id', default=None)
-        parser.add_argument('sub_id', default=None)
+        parser.add_argument('department', default=None)
+        parser.add_argument('subject', default=None)
+        parser.add_argument('industry', default=None)
         args = parser.parse_args(strict=True)
 
-        res = DatasetSearchSrv.search(args.keyword,
-                                      args.gov_id,
-                                      args.dep_id,
-                                      args.sub_id,
-                                      args.page,
-                                      args.num,
-                                      args.update_order)
+        res = DatasetSearchSrv.search(keyword=args.keyword,
+                                      gov_id=args.gov_id,
+                                      department=args.department,
+                                      subject=args.subject,
+                                      industry=args.industry,
+                                      page=args.page,
+                                      num=args.num,
+                                      update_order=args.update_order)
         return jsonify(res)
 
 

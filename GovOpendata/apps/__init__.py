@@ -44,17 +44,6 @@ def teardown_request(exception):
     db.session.remove()
 
 
-'''
-数据库的Base基类
-定义了一些基础字段
-'''
-class Base(db.Model):
-    __abstract__ = True
-
-    id = db.Column(db.Integer, primary_key=True)
-    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
-                              onupdate=db.func.current_timestamp())
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),

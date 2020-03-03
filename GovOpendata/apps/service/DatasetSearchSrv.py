@@ -11,14 +11,15 @@ from sqlalchemy import and_
 
 class DatasetSearchSrv(object):
     @classmethod
-    def search(cls, keyword: str, gov_id=None, dep_id=None, sub_id=None, page=1, num=10, update_order: str = 'desc')\
-            -> object:
+    def search(cls, keyword: str, gov_id=None, department=None, subject=None, industry=None
+               , page=1, num=10, update_order: str = 'desc')-> object:
         """
         搜索数据集
         :param keyword: 关键字
         :param gov_id: 政府平台id
-        :param dep_id: 政府部门id
-        :param sub_id: 主题分类id
+        :param department: 政府部门id
+        :param subject: 主题分类
+        :param industry: 行业分类
         :param page: 分页页码
         :param num: 每页显示数量
         :param update_order: 更新时间排序
@@ -26,19 +27,17 @@ class DatasetSearchSrv(object):
         """
         exp_list = []
         if keyword is not None:
-            exp_list.append(Dataset.path.like('%{}%'.format(keyword)))
+            exp_list.append(Dataset.name.like('%{}%'.format(keyword)))
         if gov_id is not None:
             exp_list.append(Dataset.gov_id == gov_id)
-        if dep_id is not None:
-            exp_list.append(Dataset.source == dep_id)
-        if sub_id is not None:
-            exp_list.append(Dataset.subject == sub_id)
+        if department is not None:
+            exp_list.append(Dataset.department == department)
+        if subject is not None:
+            exp_list.append(Dataset.subject == subject)
+        if industry is not None:
+            exp_list.append(Dataset.industry == industry)
 
-        order_exp = None
-        if update_order == 'desc':
-            order_exp = Dataset.update_date.desc()
-        elif update_order == 'asc':
-            order_exp = Dataset.update_date
+        order_exp = Dataset.update_date.desc() if update_order == 'desc' else Dataset.update_date
 
         if len(exp_list) > 0:
             filter_exp = and_(*exp_list)
