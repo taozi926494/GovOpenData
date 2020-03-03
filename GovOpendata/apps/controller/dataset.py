@@ -1,7 +1,6 @@
 from flask import Blueprint, request
 from ...apps.service.dataset import *
 from flask_restful import Resource
-from GovOpendata.apps.utils import ERRORS
 dataSetBp = Blueprint('dataSet', __name__)
 
 class DatasetDetailController(Resource):

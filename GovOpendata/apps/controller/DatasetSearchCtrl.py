@@ -7,7 +7,6 @@
 # @contact : xie-hong-tao@qq.com
 from flask import request, jsonify, abort
 from flask_restful import Resource, reqparse
-from GovOpendata.apps.utils import ERRORS
 from GovOpendata.apps.service.DatasetSearchSrv import DatasetSearchSrv
 
 
