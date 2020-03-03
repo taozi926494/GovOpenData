@@ -45,13 +45,10 @@ class DatasetSearchSrv(object):
         else:
             pagination = Dataset.query.order_by(order_exp).paginate(page, num, error_out=False)
 
-        data = []
-        for dataset in pagination.items:
-            data.append(dataset.to_dict())
         return {
             'total': pagination.total,
             'pages': pagination.pages,
             'has_prev': pagination.has_prev,
             'has_next': pagination.has_next,
-            'data': data
+            'data': [dataset.to_dict() for dataset in pagination.items]
         }
