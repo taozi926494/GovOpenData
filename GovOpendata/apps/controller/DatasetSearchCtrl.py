@@ -5,9 +5,9 @@
 # @Software: PyCharm
 # @Author  : Taoz
 # @contact : xie-hong-tao@qq.com
-from flask import request, jsonify, abort
 from flask_restful import Resource, reqparse
 from GovOpendata.apps.service.DatasetSearchSrv import DatasetSearchSrv
+from GovOpendata.apps.uitls import success_res
 
 
 class DatasetSearchCtrl(Resource):
@@ -23,12 +23,12 @@ class DatasetSearchCtrl(Resource):
         parser.add_argument('industry', default=None)
         args = parser.parse_args(strict=True)
 
-        res = DatasetSearchSrv.search(keyword=args.keyword,
-                                      gov_id=args.gov_id,
-                                      department=args.department,
-                                      subject=args.subject,
-                                      industry=args.industry,
-                                      page=args.page,
-                                      num=args.num,
-                                      update_order=args.update_order)
-        return jsonify(res)
+        data = DatasetSearchSrv.search(keyword=args.keyword,
+                                       gov_id=args.gov_id,
+                                       department=args.department,
+                                       subject=args.subject,
+                                       industry=args.industry,
+                                       page=args.page,
+                                       num=args.num,
+                                       update_order=args.update_order)
+        return success_res(data)

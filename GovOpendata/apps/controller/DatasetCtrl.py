@@ -1,5 +1,5 @@
-from flask import jsonify
 from GovOpendata.apps.service.DatasetSrv import DatasetSrv
+from GovOpendata.apps.uitls import success_res, error_res
 from flask_restful import Resource, reqparse
 
 
@@ -8,11 +8,11 @@ class DatasetCtrl(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('id', required=True, type=int)
         args = parser.parse_args(strict=True)
-        info = DatasetSrv.getInstanceById(id=args.get("id"))
-        attachmentInfoList = DatasetSrv.getAttachmentInfo(info.get("gov_id"), info.get("name"))
-        return jsonify({
-            'data': {'info': info, 'attachmentInfoList': attachmentInfoList}
-        })
+
+        dataset = DatasetSrv.query_by_id(id=args.id)
+        dataset['attachments'] = DatasetSrv.get_attachments(dataset["gov_id"], dataset["name"])
+
+        return success_res(dataset)
 
     def post(self) -> object:
         parser = reqparse.RequestParser()
@@ -30,20 +30,20 @@ class DatasetCtrl(Resource):
         parser.add_argument('update_date', required=True, type=str)
         parser.add_argument('acquire_date', required=True, type=str)
         args = parser.parse_args(strict=True)
-        res = DatasetSrv.add(
-            name=args.get("name"),
-            abstract=args.get("abstract"),
-            gov_id=args.get("gov_id"),
-            department=args.get("department"),
-            subject=args.get("subject"),
-            industry=args.get("industry"),
-            extra_info=args.get("extra_info"),
-            field_info=args.get("field_info"),
-            view_num=args.get("view_num"),
-            download_num=args.get("download_num"),
-            collect_num=args.get("collect_num"),
-            update_date=args.get("update_date"),
-            acquire_date=args.get("acquire_date")
+        DatasetSrv.add(
+            name=args.name,
+            abstract=args.abstract,
+            gov_id=args.gov_id,
+            department=args.department,
+            subject=args.subject,
+            industry=args.industry,
+            extra_info=args.extra_info,
+            field_info=args.field_info,
+            view_num=args.view_num,
+            download_num=args.download_num,
+            collect_num=args.collect_num,
+            update_date=args.update_date,
+            acquire_date=args.acquire_date
         )
-        return jsonify(res)
+        return success_res()
 

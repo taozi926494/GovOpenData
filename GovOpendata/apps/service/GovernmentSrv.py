@@ -1,8 +1,7 @@
+from flask import abort
 from GovOpendata.apps.model.Government import Government
 from ...apps import db
 from sqlalchemy import func
-from flask import jsonify
-
 
 class GovernmentSrv(object):
 
@@ -40,7 +39,6 @@ class GovernmentSrv(object):
             )
             db.session.add(obj)
             db.session.commit()
-            return jsonify({"status": "success", "data": "数据插入成功！"})
         except Exception as e:
             db.session.rollback()
-            return jsonify({"status": "error", "data": e})
+            abort(500, str(e))
