@@ -24,6 +24,7 @@ class Dataset(Base):
 
     def to_dict(self):
         return {
+            "id": self.id,
             "name": self.name,
             "abstract": self.abstract,
             "gov_id": self.gov_id,

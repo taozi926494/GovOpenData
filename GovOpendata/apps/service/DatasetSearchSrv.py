@@ -5,7 +5,7 @@
 # @Software: PyCharm
 # @Author  : Taoz
 # @contact : xie-hong-tao@qq.com
-from GovOpendata.apps.model.dataset import Dataset
+from GovOpendata.apps.model.Dataset import Dataset
 from sqlalchemy import and_
 
 
