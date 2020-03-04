@@ -49,20 +49,14 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='favicon.icon')
 # 创建数据库
-from .model.government import *
-
-# 蓝本注册
-from .controller.government import governmentBp
-app.register_blueprint(governmentBp)
-
-from .controller.dataset import dataSetBp
-app.register_blueprint(dataSetBp)
+from .model.Government import *
+from .model.Dataset import *
 
 def init_database():
     db.init_app(app)
     db.create_all()
 
-from .router.router import regist_router
+from .router.Router import regist_router
 def initialize():
     '''
     app初始化, 初始化各个功能模块

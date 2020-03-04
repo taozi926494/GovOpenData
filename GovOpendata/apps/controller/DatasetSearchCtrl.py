@@ -32,5 +32,3 @@ class DatasetSearchCtrl(Resource):
                                       num=args.num,
                                       update_order=args.update_order)
         return jsonify(res)
-
-
