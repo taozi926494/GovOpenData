@@ -6,8 +6,8 @@ from GovOpendata.apps.uitls import success_res
 
 class GovernmentCtrl(Resource):
     def get(self)-> object:
-        res = GovernmentSrv.statistics()
-        return jsonify(res)
+        data = GovernmentSrv.statistics()
+        return success_res(data)
 
     def post(self)->object:
         parser = reqparse.RequestParser()

@@ -25,9 +25,9 @@ class DatasetFileDownloadSrv(object):
                         yield chunk
                     else:
                         break
-        dataRootPath = app.config.get('DATA_PATH') + '/' + path
-        filename = os.path.basename(dataRootPath).encode("utf-8").decode("latin1")
-        response = Response(file_iterator(dataRootPath))
+        data_path = app.config.get('DATA_PATH') + '/' + path
+        filename = os.path.basename(data_path).encode("utf-8").decode("latin1")
+        response = Response(file_iterator(data_path))
         response.headers['Content-Type'] = 'application/octet-stream'
         response.headers["Content-Disposition"] = 'attachment;filename="{}"'.format(filename)
         return response

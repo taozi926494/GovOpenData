@@ -27,7 +27,9 @@ class DatasetSearchSrv(object):
         """
         exp_list = []
         if keyword is not None:
-            exp_list.append(Dataset.name.like('%{}%'.format(keyword)))
+            words = keyword.split(' ')
+            for word in words:
+                exp_list.append(Dataset.name.like('%{}%'.format(word)))
         if gov_id is not None:
             exp_list.append(Dataset.gov_id == gov_id)
         if department is not None:

@@ -3,8 +3,8 @@ from GovOpendata.apps.model.Government import Government
 from ...apps import db
 from sqlalchemy import func
 
-class GovernmentSrv(object):
 
+class GovernmentSrv(object):
     @classmethod
     def statistics(cls) -> object:
         # 对数据集求和
@@ -14,14 +14,14 @@ class GovernmentSrv(object):
         # 对文件大小求和
         file_size = db.session.query(func.sum(Government.file_size)).scalar()
         # 分组统计
-        governmentList = db.session.query(Government.id, Government.province).group_by(
+        governments = db.session.query(Government.id, Government.province).group_by(
             Government.dir_path).all()
         data = dict()
         data['dataset_num'] = int(dataset_num)
         data['file_num'] = int(file_num)
         data['file_size'] = int(file_size)
-        data['governmentList'] = governmentList
-        return {'data': data}
+        data['governments'] = governments
+        return data
 
     @classmethod
     def add(cls, province: str=None, region: str=None, dir_path: str=None,
