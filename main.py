@@ -12,7 +12,7 @@ def main():
         SQLALCHEMY_DATABASE_URI=opts.database_url,
     ))
     initialize()
-    app.run(host=opts.host, port=opts.port, use_reloader=False, threaded=True, debug=True)
+    app.run(host=opts.host, port=opts.port,  debug=True, threaded=True,)
 
 
 def parse_opts(config):

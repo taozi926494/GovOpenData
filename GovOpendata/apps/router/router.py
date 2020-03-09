@@ -2,12 +2,12 @@ from GovOpendata.apps import restful_api
 from GovOpendata.apps.controller.GovernmentCtrl import GovernmentCtrl
 from GovOpendata.apps.controller.DatasetCtrl import DatasetCtrl
 from GovOpendata.apps.controller.DatasetSearchCtrl import DatasetSearchCtrl
-from GovOpendata.apps.controller.DatasetFileDownloadCtrl import DatasetFileDownloadCtrl
+from GovOpendata.apps.controller.DatasetFilesCtrl import DatasetFilesCtrl
 
 
 def regist_router():
     restful_api.add_resource(GovernmentCtrl, '/government')
     restful_api.add_resource(DatasetCtrl, '/dataset')
     restful_api.add_resource(DatasetSearchCtrl, '/search')
-    restful_api.add_resource(DatasetFileDownloadCtrl, '/download')
+    restful_api.add_resource(DatasetFilesCtrl, '/files')
 

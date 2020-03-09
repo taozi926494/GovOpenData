@@ -6,5 +6,5 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@127.0.0.1:3306/govopendata'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-DATA_PATH = "D:/pythonWorkSpace/spider/GovOpendataCrawl"
-
+DATA_ROOT_PATH = r"D:\Code\Python\crawlers\opendata政府开放平台"
+SECRET_KEY = 'GooVoPDa'

@@ -1,5 +1,6 @@
 from GovOpendata.apps.service.DatasetSrv import DatasetSrv
 from GovOpendata.apps.uitls import success_res, error_res
+from ..service.DatasetFilesSrv import DatasetFilesSrv
 from flask_restful import Resource, reqparse
 
 
@@ -9,8 +10,8 @@ class DatasetCtrl(Resource):
         parser.add_argument('id', required=True, type=int)
         args = parser.parse_args(strict=True)
 
-        dataset = DatasetSrv.query_by_id(id=args.id)
-        dataset['attachments'] = DatasetSrv.get_attachments(dataset["gov_id"], dataset["name"])
+        dataset = DatasetSrv.query_by_id(_id=args.id)
+        dataset['files'] = DatasetFilesSrv.get_files(dataset["gov_id"], dataset["name"])
 
         return success_res(dataset)
 

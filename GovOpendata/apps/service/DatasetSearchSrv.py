@@ -11,17 +11,17 @@ from sqlalchemy import and_
 
 class DatasetSearchSrv(object):
     @classmethod
-    def search(cls, keyword: str, gov_id=None, department=None, subject=None, industry=None
-               , page=1, num=10, update_order: str = 'desc')-> object:
+    def search(cls, page: str, num: str,  keyword: str = None, gov_id=None, department=None, subject=None, industry=None
+               , update_order: str = 'desc')-> object:
         """
         搜索数据集
+        :param page: 分页页码
+        :param num: 每页显示数量
         :param keyword: 关键字
         :param gov_id: 政府平台id
         :param department: 政府部门id
         :param subject: 主题分类
         :param industry: 行业分类
-        :param page: 分页页码
-        :param num: 每页显示数量
         :param update_order: 更新时间排序
         :return: object
         """

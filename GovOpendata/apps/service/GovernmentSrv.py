@@ -7,26 +7,31 @@ from sqlalchemy import func
 class GovernmentSrv(object):
     @classmethod
     def statistics(cls) -> object:
-        # 对数据集求和
-        dataset_num = db.session.query(func.sum(Government.dataset_num)).scalar()
-        # 对文件求和
-        file_num = db.session.query(func.sum(Government.file_num)).scalar()
-        # 对文件大小求和
-        file_size = db.session.query(func.sum(Government.file_size)).scalar()
-        # 分组统计
-        governments = db.session.query(Government.id, Government.province).group_by(
-            Government.dir_path).all()
+        all_government = db.session.query(Government).all()
+        dataset_num = 0
+        file_num = 0
+        file_size = 0
+        gov_dict = {}
+        for government in all_government:
+            dataset_num += government.dataset_num
+            file_num += file_num
+            file_size += file_size
+            if gov_dict.get(government.province) is None:
+                gov_dict[government.province] = []
+            else:
+                gov_dict[government.province].append(government.dir_path)
+
         data = dict()
-        data['dataset_num'] = int(dataset_num)
-        data['file_num'] = int(file_num)
-        data['file_size'] = int(file_size)
-        data['governments'] = governments
+        data['dataset_num'] = dataset_num
+        data['file_num'] = file_num
+        data['file_size'] = file_size
+        data['gov_num'] = len(all_government)
+        data['province_dict'] = gov_dict
         return data
 
     @classmethod
-    def add(cls, province: str=None, region: str=None, dir_path: str=None,
-            file_num: int=0, file_size: int=0, dataset_num: int=0,
-            acquire_date: str=None) -> object:
+    def add(cls, province: str, region: str, dir_path: str, file_num: int,
+            file_size: int, dataset_num: int, acquire_date: str):
         try:
             obj = Government(
                 province=province,
@@ -41,4 +46,5 @@ class GovernmentSrv(object):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            abort(500, str(e))
+            print(e)
+            abort(500, '新增数据出错')

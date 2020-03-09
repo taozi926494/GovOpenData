@@ -21,3 +21,14 @@ def error_res(msg: str) -> dict:
         'message': msg
     })
 
+
+def file_iterator(file_path: str, chunk_size: int =512):
+    """ 文件读取迭代器 """
+    with open(file_path, 'rb') as target_file:
+        while True:
+            chunk = target_file.read(chunk_size)
+            if chunk:
+                yield chunk
+            else:
+                break
+
