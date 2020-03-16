@@ -6,6 +6,7 @@
 # @Author  : Taoz
 # @contact : xie-hong-tao@qq.com
 from flask import jsonify
+import time
 
 
 def success_res(data=None) -> dict:
@@ -31,4 +32,8 @@ def file_iterator(file_path: str, chunk_size: int =512):
                 yield chunk
             else:
                 break
+
+
+def timestamp2str(timeStamp):
+    return time.strftime("%Y--%m--%d %H:%M:%S", time.localtime(timeStamp))
 
