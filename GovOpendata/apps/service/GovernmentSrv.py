@@ -1,5 +1,6 @@
 from flask import abort
 from GovOpendata.apps.model.Government import Government
+from ..model.Dataset import Dataset
 from ...apps import db
 from sqlalchemy import func
 
@@ -18,8 +19,11 @@ class GovernmentSrv(object):
             file_size += file_size
             if gov_dict.get(government.province) is None:
                 gov_dict[government.province] = []
-            else:
-                gov_dict[government.province].append(government.dir_path)
+            gov_dict[government.province].append({
+                'dir_path': government.dir_path,
+                'gov_id': government.id,
+                'region': government.region
+            })
 
         data = dict()
         data['dataset_num'] = dataset_num
@@ -48,3 +52,8 @@ class GovernmentSrv(object):
             db.session.rollback()
             print(e)
             abort(500, '新增数据出错')
+
+    @classmethod
+    def get_departments(cls, gov_id):
+        data = Dataset.query.filter_by(gov_id=gov_id).group_by(Dataset.department).all()
+        return [x.department for x in data]

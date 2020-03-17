@@ -6,7 +6,15 @@ from GovOpendata.apps.uitls import success_res
 
 class GovernmentCtrl(Resource):
     def get(self)-> object:
-        data = GovernmentSrv.statistics()
+        parser = reqparse.RequestParser()
+        parser.add_argument('gov_id', default=None, type=int)
+        args = parser.parse_args()
+
+        if args.gov_id is not None:
+            data = GovernmentSrv.get_departments(gov_id=args.gov_id)
+            success_res(data)
+        else:
+            data = GovernmentSrv.statistics()
         return success_res(data)
 
     def post(self)->object:
@@ -19,6 +27,7 @@ class GovernmentCtrl(Resource):
         parser.add_argument('dataset_num', required=True, type=int)
         parser.add_argument('acquire_date', required=True, type=str)
         args = parser.parse_args(strict=True)
+
         data = GovernmentSrv.add(
             province=args.get("province"),
             region=args.get("region"),
