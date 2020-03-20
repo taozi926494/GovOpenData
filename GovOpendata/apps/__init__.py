@@ -55,12 +55,11 @@ def favicon():
 from .model.Government import *
 from .model.Dataset import *
 from .router.router import regist_router
-from ..apps.job.PeriodicScheduling import PeriodicScheduling
+# from ..apps.job.PeriodicScheduling import PeriodicScheduling
 # 定义apscheduler的后台调度进程
-scheduler = BackgroundScheduler()
+# scheduler = BackgroundScheduler()
 # 每5秒中就同步scrapyd服务器上的job状态 到 系统的job_execution任务执行数据库中来
-# scheduler.add_job(PeriodicScheduling.add_data, 'cron', hour="*", minute=20, id='sys_sync_data')
-PeriodicScheduling.add_data()
+# scheduler.add_job(PeriodicScheduling.add_data, 'cron', hour="12", id='sys_sync_data')
 
 
 def init_database():

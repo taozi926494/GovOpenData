@@ -13,7 +13,7 @@ from GovOpendata.apps.uitls import success_res
 
 
 class DatasetSearchCtrl(Resource):
-    def get(self) -> object:
+    def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument('page', required=True, type=int)
         parser.add_argument('num', required=True, type=int)

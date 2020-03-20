@@ -1,5 +1,5 @@
 from flask import abort
-from GovOpendata.apps.model.Government import Government
+from ..model.Government import Government
 from ..model.Dataset import Dataset
 from ...apps import db
 
@@ -14,8 +14,8 @@ class GovernmentSrv(object):
         gov_dict = {}
         for government in all_government:
             dataset_num += government.dataset_num
-            file_num += file_num
-            file_size += file_size
+            file_num += government.file_num
+            file_size += government.file_size
             if gov_dict.get(government.province) is None:
                 gov_dict[government.province] = []
             gov_dict[government.province].append({
@@ -72,15 +72,15 @@ class GovernmentSrv(object):
             abort(500, '更新数据出错')
 
     @classmethod
-    def is_exist(cls, dir_path: str) -> bool:
-        obj = Government.query.filter_by(dir_path=dir_path).first()
-        return True if obj else False
+    def find_by_dir_path(cls, dir_path: str) -> bool:
+        return Government.query.filter_by(dir_path=dir_path).first()
 
     @classmethod
     def get_id(cls, dir_path: str) -> int:
         obj = Government.query.filter_by(dir_path=dir_path).first()
         return obj.id if obj else 0
 
+    @classmethod
     def get_departments(cls, gov_id):
         data = Dataset.query.filter_by(gov_id=gov_id).group_by(Dataset.department).all()
         return [x.department for x in data]

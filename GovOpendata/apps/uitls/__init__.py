@@ -5,6 +5,9 @@
 # @Software: PyCharm
 # @Author  : Taoz
 # @contact : xie-hong-tao@qq.com
+import json
+import os
+
 from flask import jsonify
 import time
 
@@ -36,4 +39,15 @@ def file_iterator(file_path: str, chunk_size: int =512):
 
 def timestamp2str(timeStamp):
     return time.strftime("%Y--%m--%d %H:%M:%S", time.localtime(timeStamp))
+
+
+def load_json_file(path, parse=True):
+    if os.path.exists(path):
+        with open(path, 'r', encoding="utf-8") as f:
+            if parse:
+                return json.loads(f.read())
+            else:
+                return f.read()
+    else:
+        return None
 

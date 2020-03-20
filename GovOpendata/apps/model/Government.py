@@ -14,4 +14,3 @@ class Government(Base):
     dataset_num = db.Column(db.Integer, comment="数据集数量")
 
     acquire_date = db.Column(db.DateTime, comment="采集时间")
-    # path = db.Column(db.String(255), comment="数据文件路径，用于查找文件及下载")

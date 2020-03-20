@@ -8,12 +8,12 @@
 from GovOpendata.apps.model import db, Base
 
 
-class CrawlDataRecord(Base):
-    """数据集表"""
-    __tablename__ = 'crawldatarecord'
+class SpiderRecord(Base):
+    """爬虫记录表"""
+    __tablename__ = 'spider_record'
     province = db.Column(db.String(255), comment="平台所属省")
     region = db.Column(db.String(255), comment="平台所属行政区域， 如贵阳市")
-    dir_path = db.Column(db.String(255), unique=True, comment="该工程的文件目录名")
+    dir_path = db.Column(db.String(255), comment="该工程的文件目录名")
 
     file_num = db.Column(db.Integer, comment="文件数量")
     file_size = db.Column(db.Integer, comment="文件总大小")

@@ -5,7 +5,7 @@ from GovOpendata.apps.uitls import success_res
 
 
 class GovernmentCtrl(Resource):
-    def get(self)-> object:
+    def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument('gov_id', default=None, type=int)
         args = parser.parse_args()
