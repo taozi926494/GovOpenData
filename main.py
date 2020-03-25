@@ -8,7 +8,8 @@ from GovOpendata.apps import app, initialize
 
 def main():
     opts, args = parse_opts(app.config)
-    if opts.dev:
+
+    if opts.dev == 'true':
         sys_type = platform.system()
         # linux系统下
         if sys_type == "Linux":
@@ -17,12 +18,15 @@ def main():
 
         data_root_path = r"D:\Code\0CETC_Projects\GovOpendataCenter\GovOpendataCrawlers"
         debug = True
-    else:
+    elif opts.dev == 'false':
         data_root_path = r"/mnt/nfs/GovOpenDataCrawlers"
         debug = False
+    else:
+        print("Please Force Input Correct --dev Option ! 'true' or 'false")
+        return
     app.config.update(dict(
         SQLALCHEMY_DATABASE_URI=opts.database_url,
-        DATA_ROOT_PATH = data_root_path
+        DATA_ROOT_PATH=data_root_path
     ))
     initialize()
     app.run(host=opts.host, port=opts.port, debug=debug, threaded=True)
@@ -45,7 +49,7 @@ def parse_opts(config):
                       default=config.get('SQLALCHEMY_DATABASE_URI'))
     parser.add_option("--dev",
                       help="develop or production model",
-                      default=True)
+                      default='true')
     return parser.parse_args()
 
 
