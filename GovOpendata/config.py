@@ -6,5 +6,3 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@127.0.0.1:3306/govopendata'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-# DATA_ROOT_PATH = r"D:\Code\0CETC_Projects\GovOpendataCenter\GovOpendataCrawlers"
-DATA_ROOT_PATH = r"http://172.16.119.6:5000/job?type=spider&token=CeTcBiGData"
