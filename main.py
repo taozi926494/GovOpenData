@@ -1,7 +1,6 @@
 import os
 import sys
 from optparse import OptionParser
-# BASE_DIR = os.path.dirname(__file__)
 sys.path.append(os.getcwd())
 from GovOpendata.apps import app, initialize
 
