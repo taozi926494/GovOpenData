@@ -26,7 +26,7 @@ def parse_opts(config):
                       help="port, default:5000",
                       dest='port',
                       type="int",
-                      default=5000)
+                      default=5009)
     parser.add_option("--database-url",
                       help='SpiderKeeper metadata database default: %s' % config.get('SQLALCHEMY_DATABASE_URI'),
                       dest='database_url',

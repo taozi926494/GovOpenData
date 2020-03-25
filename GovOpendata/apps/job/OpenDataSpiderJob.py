@@ -6,8 +6,6 @@
 # @Author  : Taoz
 # @contact : xie-hong-tao@qq.com
 import os
-import json
-
 from ..uitls import timestamp2str, load_json_file
 from ..service.GovernmentSrv import GovernmentSrv
 from ..service.SpiderRecordSrv import SpiderRecordSrv
@@ -40,3 +38,6 @@ class OpenDataSpiderJob(object):
 
             # 向记录表中添加数据，用于数据增长趋势统计
             SpiderRecordSrv.add(**data_to_add)
+
+
+

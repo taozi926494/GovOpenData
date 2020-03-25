@@ -7,11 +7,9 @@
 # @contact : xie-hong-tao@qq.com
 import os
 import json
-
+import requests
 from GovOpendata.apps.model import set_model_by_dict
 from ..uitls import timestamp2str, load_json_file
-from ..service.GovernmentSrv import GovernmentSrv
-from ..service.DatasetSrv import DatasetSrv
 from ...apps import app, db
 from flask import abort
 from ..model.Dataset import Dataset
@@ -47,6 +45,7 @@ class DatasetJob(object):
                             "abstract": baseinfo["abstract"],
                             "gov_id": gov.id,
                             "department": baseinfo["source"],
+                            "subject_auto": cls.auto_classify(dataset_name),
                             "subject_origin": baseinfo["subject"],
                             "update_date": baseinfo["update_date"],
                             "industry": "",
@@ -58,3 +57,18 @@ class DatasetJob(object):
                 except Exception as e:
                     db.session.rollback()
                     abort(400, str(e))
+
+    @classmethod
+    def auto_classify(cls, text):
+        url = 'http://172.16.119.13/api/govern-classify/catalogue/autocatalogue/catalogue'
+        headers = {
+            "Content-Type": "application/json;charset=UTF-8",
+            "token": "dd3e108b2b369a75cb57cb59087bf4d5"
+        }
+        body = {
+            "text": text
+        }
+        res = requests.post(url, headers=headers, json=body)
+        result = json.loads(res.text)
+        if result["code"] == 10000:
+            return result['result'][0]
