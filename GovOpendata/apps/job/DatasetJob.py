@@ -32,6 +32,11 @@ class DatasetJob(object):
                 extrainfo = load_json_file(dataset_path + '/extrainfo.json', parse=False)
                 datafield = load_json_file(dataset_path + '/datafield.json', parse=False)
 
+                if baseinfo.get('source') is None:
+                    continue
+
+                print(baseinfo)
+
                 exist = Dataset.query.filter_by(gov_id=gov.id, name=dataset_name).first()
                 try:
                     if exist is not None:
@@ -56,6 +61,7 @@ class DatasetJob(object):
                         db.session.commit()
                 except Exception as e:
                     db.session.rollback()
+                    print('ERROR ', e)
                     abort(400, str(e))
 
     @classmethod
