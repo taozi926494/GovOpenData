@@ -46,6 +46,5 @@ class NewsSrv(object):
                 news['origin'] = time_origin[0]
                 news['abstract'] = info.xpath('div/p[@class="news-txt"]/span')[0].xpath('string(.)').strip()
                 result['data'].append(news)
-        print(result)
         return result
 

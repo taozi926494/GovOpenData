@@ -19,6 +19,7 @@ class OpenDataSpiderJob(object):
         # 遍历文件的根目录
         spiders_root_path = app.config.get('DATA_ROOT_PATH')
         for spider_name in os.listdir(spiders_root_path):
+            print('Spider Name:  %s' % spider_name)
             spider_record_file = spiders_root_path + '/{}/last_crawl.json'.format(spider_name)
             data = load_json_file(spider_record_file)
             data_to_add = {
