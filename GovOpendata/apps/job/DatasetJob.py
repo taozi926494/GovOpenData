@@ -18,16 +18,17 @@ from ..model.Dataset import Dataset
 from ..model.Government import Government
 
 
+
 class DatasetJob(object):
     @classmethod
-    def run(cls):
+    def run(cls, dir_path:str):
         # 遍历文件的根目录
         spiders_root_path = app.config.get('DATA_ROOT_PATH')
         executor = ThreadPoolExecutor(max_workers=16)
-
-        for spider_name in os.listdir(spiders_root_path):
-            files_path = spiders_root_path + '/{}/files'.format(spider_name)
-            gov = Government.query.filter_by(dir_path=spider_name).first()
+        print("1111111111111111111", dir_path)
+        if dir_path:
+            files_path = spiders_root_path + '/{}/files'.format(dir_path)
+            gov = Government.query.filter_by(dir_path=dir_path).first()
 
             queue = []
             # 遍历指定开放平台文件夹下数据存储文件夹, 数据集根目录
@@ -38,6 +39,20 @@ class DatasetJob(object):
                 else:
                     executor.map(cls.handel_dataset, queue)
                     queue = []
+        else:
+            for spider_name in os.listdir(spiders_root_path):
+                files_path = spiders_root_path + '/{}/files'.format(spider_name)
+                gov = Government.query.filter_by(dir_path=spider_name).first()
+
+                queue = []
+                # 遍历指定开放平台文件夹下数据存储文件夹, 数据集根目录
+                for dataset_name in os.listdir(files_path):
+                    # cls.handel_dataset((files_path, dataset_name, gov.id))
+                    if len(queue) < 16:
+                        queue.append((files_path, dataset_name, gov.id))
+                    else:
+                        executor.map(cls.handel_dataset, queue)
+                        queue = []
 
     @classmethod
     def handel_dataset(cls, tpl: tuple):
