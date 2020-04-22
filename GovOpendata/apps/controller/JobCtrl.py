@@ -16,6 +16,7 @@ class JobCtrl(Resource):
     def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument('type', default=None, type=str, choices=['spider', 'dataset'])
+        parser.add_argument('dir_path', default=None, type=str)
         parser.add_argument('token', type=str)
         args = parser.parse_args()
 
@@ -26,7 +27,7 @@ class JobCtrl(Resource):
             OpenDataSpiderJob.run()
             return success_res()
         else:
-            DatasetJob.run()
+            DatasetJob.run(args.dir_path)
             return success_res()
 
 
