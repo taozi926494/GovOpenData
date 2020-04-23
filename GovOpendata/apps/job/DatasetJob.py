@@ -25,7 +25,6 @@ class DatasetJob(object):
         # 遍历文件的根目录
         spiders_root_path = app.config.get('DATA_ROOT_PATH')
         executor = ThreadPoolExecutor(max_workers=16)
-        print("1111111111111111111", dir_path)
         if dir_path:
             files_path = spiders_root_path + '/{}/files'.format(dir_path)
             gov = Government.query.filter_by(dir_path=dir_path).first()
