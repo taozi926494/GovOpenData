@@ -1,12 +1,12 @@
 from typing import List
 from GovOpendata.apps.model.Dataset import Dataset
+from GovOpendata.apps.service import BaseSrv
 from ...apps import app, db
 import os
 from flask import abort
-from ..model import set_model_by_dict
 
 
-class DatasetSrv(object):
+class DatasetSrv(BaseSrv):
     @classmethod
     def save(cls, **kwargs):
         exist = Dataset.query.filter_by(gov_id=kwargs['gov_id'], name=kwargs['name']).first()

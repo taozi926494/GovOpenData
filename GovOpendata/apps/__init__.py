@@ -9,7 +9,6 @@ from flask_restful import Api
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
-
 app = Flask(__name__)
 restful_api = Api(app)
 app.config.from_object(config)
@@ -34,7 +33,6 @@ handler.setFormatter(formatter)
 app.logger.setLevel(app.config.get('LOG_LEVEL', "INFO"))
 app.logger.addHandler(handler)
 
-db = SQLAlchemy(app, session_options=dict(autocommit=False, autoflush=True))
 
 
 @app.teardown_request
