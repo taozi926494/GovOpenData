@@ -1,4 +1,3 @@
-import base64
 import os
 from typing import List
 
@@ -17,7 +16,7 @@ class DatasetFilesSrv(object):
 
     @classmethod
     def get_files(cls, gov_id: int, dataset_name: str) -> List:
-        gov = Government.query.filter_by(id=gov_id).first()
+        gov = Government.find_by_id(_id=gov_id, _to_dict=False)
         result = []
         dataset_files_dir = cls.dataset_files_dir(gov.dir_path, dataset_name)
         for path, file_folder, filename_list in os.walk(dataset_files_dir):
@@ -43,8 +42,8 @@ class DatasetFilesSrv(object):
         :param file_path_rel: 文件在数据集目录下的相对路径
         :return: response
         """
-        dataset = Dataset.query.filter_by(id=dataset_id).first()
-        gov = Government.query.filter_by(id=dataset.gov_id).first()
+        dataset = Dataset.find_by_id(_id=dataset_id, _to_dict=False)
+        gov = Government.find_by_id(_id=dataset.gov_id, _to_dict=False)
 
         file_path = cls.dataset_files_dir(gov.dir_path, dataset.name) + file_path_rel
 

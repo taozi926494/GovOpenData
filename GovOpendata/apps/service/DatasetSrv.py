@@ -7,73 +7,22 @@ from flask import abort
 
 
 class DatasetSrv(BaseSrv):
+    orm = Dataset
+
     @classmethod
     def save(cls, **kwargs):
-        exist = Dataset.query.filter_by(gov_id=kwargs['gov_id'], name=kwargs['name']).first()
+        exist = cls.orm.query.filter_by(gov_id=kwargs['gov_id'], name=kwargs['name']).first()
         try:
             if exist is not None:
-                set_model_by_dict(exist, kwargs)
+                exist.set(kwargs)
             else:
-                one = Dataset()
-                set_model_by_dict(one, kwargs)
+                one = cls.orm()
+                one.set(kwargs)
                 db.session.add(one)
-                db.session.commit()
+            db.session.commit()
         except Exception as e:
             db.session.rollback()
             abort(400, str(e))
-
-    # @classmethod
-    # def add(cls, name: str, abstract: str, gov_id: int, department: str,
-    #         subject: str, industry: str, extra_info: str, field_info: str,
-    #         view_num: int, download_num: int, collect_num: int, update_date: str,
-    #         acquire_date: str):
-    #     try:
-    #         obj = Dataset(
-    #             name=name,
-    #             abstract=abstract,
-    #             gov_id=gov_id,
-    #             department=department,
-    #             subject=subject,
-    #             industry=industry,
-    #             extra_info=extra_info,
-    #             field_info=field_info,
-    #             view_num=view_num,
-    #             download_num=download_num,
-    #             collect_num=collect_num,
-    #             update_date=update_date,
-    #             acquire_date=acquire_date
-    #         )
-    #         db.session.add(obj)
-    #         db.session.commit()
-    #     except Exception as e:
-    #         db.session.rollback()
-    #         abort(500, str(e))
-    #
-    # @classmethod
-    # def update(cls, name: str, abstract: str, gov_id: int, department: str,
-    #         subject: str, industry: str, extra_info: str, field_info: str,
-    #         view_num: int, download_num: int, collect_num: int, update_date: str,
-    #         acquire_date: str):
-    #     try:
-    #         Dataset.query.filter_by(name=name).update({
-    #             "name": name,
-    #             "abstract": abstract,
-    #             "gov_id": gov_id,
-    #             "department": department,
-    #             "subject": subject,
-    #             "industry": industry,
-    #             "extra_info": extra_info,
-    #             "field_info": field_info,
-    #             "view_num": view_num,
-    #             "download_num": download_num,
-    #             "collect_num": collect_num,
-    #             "update_date": update_date,
-    #             "acquire_date": acquire_date
-    #         })
-    #         db.session.commit()
-    #     except Exception as e:
-    #         db.session.rollback()
-    #         abort(500, str(e))
 
     # @classmethod
     # def getAttachmentInfo(cls, gov_id: int=None, name: str=None) -> object :
@@ -98,13 +47,7 @@ class DatasetSrv(BaseSrv):
     #             result.append({"name": fileName, "type": fileType, "size": fsize, "path": relativePath})
     #     return result
     #
-    @classmethod
-    def query_by_id(cls, _id: int) -> dict:
-        obj = Dataset.query.filter_by(id=_id).first()
-        if obj:
-            return obj.to_dict()
-        else:
-            abort(400, 'No Result')
+
     #
     # @classmethod
     # def is_exist(cls, name: str) -> bool:

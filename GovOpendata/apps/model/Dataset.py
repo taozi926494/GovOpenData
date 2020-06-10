@@ -21,20 +21,4 @@ class Dataset(Base):
     download_num = db.Column(db.Integer, comment="下载量", default=0)
     collect_num = db.Column(db.Integer, comment="收藏量", default=0)
 
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "abstract": self.abstract,
-            "gov_id": self.gov_id,
-            "department": self.department,
-            "subject_origin": self.subject_origin,
-            "subject_auto": self.subject_auto,
-            "industry": self.industry,
-            "extra_info": self.extra_info,
-            "field_info": self.field_info,
-            "view_num": self.view_num,
-            "download_num": self.download_num,
-            "collect_num": self.collect_num,
-            "update_date": self.update_date,
-        }
+

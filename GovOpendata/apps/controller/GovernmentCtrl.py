@@ -28,15 +28,7 @@ class GovernmentCtrl(Resource):
         parser.add_argument('acquire_date', required=True, type=str)
         args = parser.parse_args(strict=True)
 
-        data = GovernmentSrv.add(
-            province=args.get("province"),
-            region=args.get("region"),
-            dir_path=args.get("dir_path"),
-            file_num=args.get("file_num"),
-            file_size=args.get("file_size"),
-            dataset_num=args.get("dataset_num"),
-            acquire_date=args.get("acquire_date")
-        )
+        data = GovernmentSrv.save(**args)
         return success_res(data)
 
     def put(self) -> object:
@@ -49,6 +41,7 @@ class GovernmentCtrl(Resource):
         parser.add_argument('dataset_num', required=True, type=int)
         parser.add_argument('acquire_date', required=True, type=str)
         args = parser.parse_args(strict=True)
+        # TODO 由于没有id 暂时不能用save，若要用save只能添加id参数，并且修改前端参数值
         data = GovernmentSrv.update(
             province=args.get("province"),
             region=args.get("region"),

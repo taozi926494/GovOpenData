@@ -32,13 +32,9 @@ class OpenDataSpiderJob(object):
                 "acquire_date": timestamp2str(data["crawl_time"])
             }
 
-            if GovernmentSrv.find_by_dir_path(spider_name) is not None:
-                GovernmentSrv.update(**data_to_add)
-            else:
-                GovernmentSrv.add(**data_to_add)
-
+            GovernmentSrv.save(**data_to_add)
             # 向记录表中添加数据，用于数据增长趋势统计
-            SpiderRecordSrv.add(**data_to_add)
+            SpiderRecordSrv.save(**data_to_add)
 
 
 

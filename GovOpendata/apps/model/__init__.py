@@ -5,7 +5,6 @@ from flask_restful import abort
 from flask_sqlalchemy import SQLAlchemy
 import base64
 from sqlalchemy import DateTime, Date, Numeric, LargeBinary
-import datetime
 db = SQLAlchemy(app, session_options=dict(autocommit=False, autoflush=True))
 db.init_app(app)
 
