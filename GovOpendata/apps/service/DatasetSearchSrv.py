@@ -35,7 +35,7 @@ class DatasetSearchSrv(object):
         if department is not None:
             exp_list.append(Dataset.department == department)
         if subject is not None:
-            exp_list.append(Dataset.subject_origin == subject)
+            exp_list.append(Dataset.subject_auto == subject)
         if industry is not None:
             exp_list.append(Dataset.industry == industry)
 

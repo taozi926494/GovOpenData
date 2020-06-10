@@ -9,7 +9,6 @@ from flask_restful import Api
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
-
 app = Flask(__name__)
 restful_api = Api(app)
 app.config.from_object(config)
@@ -34,7 +33,6 @@ handler.setFormatter(formatter)
 app.logger.setLevel(app.config.get('LOG_LEVEL', "INFO"))
 app.logger.addHandler(handler)
 
-db = SQLAlchemy(app, session_options=dict(autocommit=False, autoflush=True))
 
 
 @app.teardown_request
@@ -55,18 +53,11 @@ def favicon():
 from .model.Government import *
 from .model.Dataset import *
 from .router.router import regist_router
+regist_router()
+
 # from ..apps.job.PeriodicScheduling import PeriodicScheduling
 # 定义apscheduler的后台调度进程
 # scheduler = BackgroundScheduler()
 # 每5秒中就同步scrapyd服务器上的job状态 到 系统的job_execution任务执行数据库中来
 # scheduler.add_job(PeriodicScheduling.add_data, 'cron', hour="12", id='sys_sync_data')
 
-
-def init_database():
-    db.init_app(app)
-    db.create_all()
-
-
-def initialize():
-    init_database()
-    regist_router()
