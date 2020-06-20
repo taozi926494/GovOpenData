@@ -10,13 +10,11 @@ import json
 from concurrent.futures.thread import ThreadPoolExecutor
 
 import requests
-from GovOpendata.apps.model import set_model_by_dict
 from ..uitls import timestamp2str, load_json_file
 from ...apps import app, db
 from flask import abort
 from ..model.Dataset import Dataset
 from ..model.Government import Government
-
 
 
 class DatasetJob(object):
@@ -71,12 +69,12 @@ class DatasetJob(object):
 
         exist = Dataset.query.filter_by(gov_id=gov_id, name=dataset_name).first()
         if exist is not None:
-            set_model_by_dict(exist, {
+            exist.set({
                 'update_date': baseinfo['update_date']
             })
         else:
             one = Dataset()
-            set_model_by_dict(one, {
+            one.set({
                 "name": dataset_name,
                 "abstract": baseinfo["abstract"],
                 "gov_id": gov_id,
@@ -89,7 +87,7 @@ class DatasetJob(object):
                 "field_info": datafield,
             })
             db.session.add(one)
-            db.session.commit()
+        db.session.commit()
 
     @classmethod
     def auto_classify(cls, text):

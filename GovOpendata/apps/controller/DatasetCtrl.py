@@ -10,7 +10,7 @@ class DatasetCtrl(Resource):
         parser.add_argument('id', required=True, type=int)
         args = parser.parse_args(strict=True)
 
-        dataset = DatasetSrv.query_by_id(_id=args.id)
+        dataset = DatasetSrv.find_by_id(_id=args.id, _to_dict=True)
         dataset['files'] = DatasetFilesSrv.get_files(dataset["gov_id"], dataset["name"])
 
         return success_res(dataset)
@@ -29,14 +29,13 @@ class DatasetCtrl(Resource):
         parser.add_argument('download_num', required=True, type=int)
         parser.add_argument('collect_num', required=True, type=int)
         parser.add_argument('update_date', required=True, type=str)
-        parser.add_argument('acquire_date', required=True, type=str)
         args = parser.parse_args(strict=True)
         DatasetSrv.save(
             name=args.name,
             abstract=args.abstract,
             gov_id=args.gov_id,
             department=args.department,
-            subject=args.subject,
+            subject_origin=args.subject,
             industry=args.industry,
             extra_info=args.extra_info,
             field_info=args.field_info,
@@ -44,7 +43,6 @@ class DatasetCtrl(Resource):
             download_num=args.download_num,
             collect_num=args.collect_num,
             update_date=args.update_date,
-            acquire_date=args.acquire_date
         )
         return success_res()
 
@@ -62,14 +60,13 @@ class DatasetCtrl(Resource):
         parser.add_argument('download_num', required=True, type=int)
         parser.add_argument('collect_num', required=True, type=int)
         parser.add_argument('update_date', required=True, type=str)
-        parser.add_argument('acquire_date', required=True, type=str)
         args = parser.parse_args(strict=True)
         DatasetSrv.save(
             name=args.name,
             abstract=args.abstract,
             gov_id=args.gov_id,
             department=args.department,
-            subject=args.subject,
+            subject_origin=args.subject,
             industry=args.industry,
             extra_info=args.extra_info,
             field_info=args.field_info,
@@ -77,6 +74,5 @@ class DatasetCtrl(Resource):
             download_num=args.download_num,
             collect_num=args.collect_num,
             update_date=args.update_date,
-            acquire_date=args.acquire_date
         )
         return success_res()

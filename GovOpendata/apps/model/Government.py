@@ -1,5 +1,4 @@
 from GovOpendata.apps.model import db, Base
-from GovOpendata.apps.model import db, Base
 
 
 class Government(Base):

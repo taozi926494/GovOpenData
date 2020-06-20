@@ -6,7 +6,7 @@ sys.path.append(os.getcwd())
 from GovOpendata.apps import app
 
 if __name__ == '__main__':
-    data_root_path = r"D:\Code\0CETC_Projects\GovOpendataCenter\GovOpendataCrawlers"
+    data_root_path = r"E:\code\systems2020\GovOpendataCrawlers"
     app.config.update(dict(
         DATA_ROOT_PATH=data_root_path
     ))

@@ -3,6 +3,6 @@ import os
 DEBUG = True
 DATA_ROOT_PATH = '/mnt/nfs/GovOpenDataCrawlers/'
 # 数据库配置
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@127.0.0.1:3306/govopendata'
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:Clc372493@127.0.0.1:3306/govopendata'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
